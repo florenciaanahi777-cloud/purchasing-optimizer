@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { createSupplier } from '@/actions/suppliers'
+import { useT } from '@/lib/locale-context'
 import type { Supplier } from '@/types'
 
 const EMPTY = { name: '', email: '', contact_name: '', notes: '' }
@@ -18,14 +19,14 @@ const EMPTY = { name: '', email: '', contact_name: '', notes: '' }
 interface AddSupplierDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  onCreated?: (supplier: Supplier) => void  // used during RFQ creation
+  onCreated?: (supplier: Supplier) => void
 }
 
 export function AddSupplierDialog({ open, onOpenChange, onCreated }: AddSupplierDialogProps) {
+  const t = useT()
   const [isPending, startTransition] = useTransition()
   const [form, setForm] = useState(EMPTY)
 
-  // Reset form when dialog closes
   useEffect(() => {
     if (!open) setForm(EMPTY)
   }, [open])
@@ -49,7 +50,7 @@ export function AddSupplierDialog({ open, onOpenChange, onCreated }: AddSupplier
         return
       }
 
-      toast.success(`${form.name} added to your supplier directory.`)
+      toast.success(`${form.name} ${t.supplier_added_suffix}`)
       if (result.data && onCreated) onCreated(result.data)
       onOpenChange(false)
     })
@@ -59,13 +60,13 @@ export function AddSupplierDialog({ open, onOpenChange, onCreated }: AddSupplier
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add supplier</DialogTitle>
+          <DialogTitle>{t.add_supplier}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 pt-1">
           <div className="space-y-1.5">
             <Label htmlFor="s-name">
-              Company name <span className="text-destructive">*</span>
+              {t.company_name} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="s-name"
@@ -79,7 +80,7 @@ export function AddSupplierDialog({ open, onOpenChange, onCreated }: AddSupplier
 
           <div className="space-y-1.5">
             <Label htmlFor="s-email">
-              Email <span className="text-destructive">*</span>
+              {t.email} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="s-email"
@@ -93,8 +94,8 @@ export function AddSupplierDialog({ open, onOpenChange, onCreated }: AddSupplier
 
           <div className="space-y-1.5">
             <Label htmlFor="s-contact">
-              Contact name{' '}
-              <span className="text-muted-foreground font-normal">(optional)</span>
+              {t.contact_name}{' '}
+              <span className="text-muted-foreground font-normal">({t.optional})</span>
             </Label>
             <Input
               id="s-contact"
@@ -106,8 +107,8 @@ export function AddSupplierDialog({ open, onOpenChange, onCreated }: AddSupplier
 
           <div className="space-y-1.5">
             <Label htmlFor="s-notes">
-              Notes{' '}
-              <span className="text-muted-foreground font-normal">(optional)</span>
+              {t.notes}{' '}
+              <span className="text-muted-foreground font-normal">({t.optional})</span>
             </Label>
             <Textarea
               id="s-notes"
@@ -125,10 +126,10 @@ export function AddSupplierDialog({ open, onOpenChange, onCreated }: AddSupplier
               onClick={() => onOpenChange(false)}
               disabled={isPending}
             >
-              Cancel
+              {t.cancel}
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? 'Saving…' : 'Add supplier'}
+              {isPending ? t.saving : t.add_supplier}
             </Button>
           </DialogFooter>
         </form>

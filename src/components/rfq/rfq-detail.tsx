@@ -101,7 +101,7 @@ export function RFQDetailView({ rfq }: RFQDetailViewProps) {
           <p className="text-sm text-green-600 italic">"{rfq.decision.reason}"</p>
           <div className="pt-1">
             <Link
-              href={`/rfq/${rfq.id}/decision`}
+              href={`/rfq/${rfq.id}/compare`}
               className="text-xs text-green-700 hover:underline"
             >
               View full decision →
@@ -163,7 +163,9 @@ export function RFQDetailView({ rfq }: RFQDetailViewProps) {
                   <p className="text-xs text-muted-foreground">{rs.supplier.email}</p>
                 </div>
                 <div className="flex items-center gap-3">
-                  {!isDecided && <CopyLinkButton token={rs.public_token} />}
+                  {rfq.status === 'open' && rs.status === 'invited' && (
+                    <CopyLinkButton token={rs.public_token} />
+                  )}
                   <Badge
                     variant="outline"
                     className={cn(

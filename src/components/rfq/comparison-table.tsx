@@ -9,9 +9,11 @@ function formatCurrency(val: number) {
 
 interface ComparisonTableProps {
   data: ComparisonData
+  selectedSupplierId?: string | null
+  onSelectSupplier?: (id: string) => void
 }
 
-export function ComparisonTable({ data }: ComparisonTableProps) {
+export function ComparisonTable({ data, selectedSupplierId, onSelectSupplier }: ComparisonTableProps) {
   const { items, columns } = data
   const submitted = columns.filter(c => c.quote !== null)
 
@@ -56,22 +58,50 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
             <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground w-[220px]">
               Item
             </th>
-            {columns.map(col => (
-              <th
-                key={col.rfqSupplierId}
-                className="px-4 py-2.5 text-xs font-medium text-center min-w-[140px]"
-              >
-                <span className={cn(
-                  'block font-semibold',
-                  col.submissionStatus === 'submitted' ? 'text-foreground' : 'text-muted-foreground'
-                )}>
-                  {col.supplierName}
-                </span>
-                {col.submissionStatus === 'invited' && (
-                  <span className="text-xs text-muted-foreground font-normal">Awaiting</span>
-                )}
-              </th>
-            ))}
+            {columns.map(col => {
+              const isSelected = selectedSupplierId === col.supplierId
+              const isSelectable = !!onSelectSupplier && col.quote !== null
+              return (
+                <th
+                  key={col.rfqSupplierId}
+                  onClick={() => isSelectable && onSelectSupplier!(col.supplierId)}
+                  className={cn(
+                    'px-4 py-2.5 text-xs font-medium text-center min-w-[140px] transition-colors',
+                    isSelected ? 'bg-primary/8' : isSelectable && 'hover:bg-muted/40',
+                    isSelectable && 'cursor-pointer',
+                  )}
+                >
+                  {/* Radio indicator */}
+                  {isSelectable && (
+                    <span className={cn(
+                      'inline-flex items-center justify-center h-3.5 w-3.5 rounded-full border mb-1.5',
+                      isSelected ? 'border-primary bg-primary' : 'border-muted-foreground/40'
+                    )}>
+                      {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-white block" />}
+                    </span>
+                  )}
+                  <span className={cn(
+                    'block font-semibold',
+                    isSelected
+                      ? 'text-primary'
+                      : col.submissionStatus === 'submitted'
+                        ? 'text-foreground'
+                        : 'text-muted-foreground'
+                  )}>
+                    {col.supplierName}
+                  </span>
+                  {isSelected && (
+                    <span className="text-xs text-primary font-medium">Selected</span>
+                  )}
+                  {!isSelected && isSelectable && (
+                    <span className="text-xs text-muted-foreground/60 font-normal">Click to select</span>
+                  )}
+                  {!isSelected && col.submissionStatus === 'invited' && (
+                    <span className="text-xs text-muted-foreground font-normal">Awaiting</span>
+                  )}
+                </th>
+              )
+            })}
           </tr>
         </thead>
 
@@ -89,9 +119,14 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                   </p>
                 </td>
                 {columns.map(col => {
+                  const isSelected = selectedSupplierId === col.supplierId
+
                   if (!col.quote) {
                     return (
-                      <td key={col.rfqSupplierId} className="px-4 py-3 text-center text-muted-foreground text-xs">
+                      <td key={col.rfqSupplierId} className={cn(
+                        'px-4 py-3 text-center text-muted-foreground text-xs',
+                        isSelected && 'bg-primary/5'
+                      )}>
                         —
                       </td>
                     )
@@ -102,7 +137,10 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
 
                   if (!price) {
                     return (
-                      <td key={col.rfqSupplierId} className="px-4 py-3 text-center text-muted-foreground text-xs">
+                      <td key={col.rfqSupplierId} className={cn(
+                        'px-4 py-3 text-center text-muted-foreground text-xs',
+                        isSelected && 'bg-primary/5'
+                      )}>
                         Not quoted
                       </td>
                     )
@@ -113,7 +151,8 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                       key={col.rfqSupplierId}
                       className={cn(
                         'px-4 py-3 text-center',
-                        isLowest && 'bg-green-50'
+                        isLowest && 'bg-green-50',
+                        isSelected && !isLowest && 'bg-primary/5'
                       )}
                     >
                       <p className={cn('font-medium tabular-nums', isLowest && 'text-green-700')}>
@@ -142,10 +181,15 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
             </td>
             {columns.map(col => {
               const isLowest = lowestTotalSupplierId === col.supplierId && submitted.length > 1
+              const isSelected = selectedSupplierId === col.supplierId
               return (
                 <td
                   key={col.rfqSupplierId}
-                  className={cn('px-4 py-3 text-center', isLowest && 'bg-green-50')}
+                  className={cn(
+                    'px-4 py-3 text-center',
+                    isLowest && 'bg-green-50',
+                    isSelected && !isLowest && 'bg-primary/5'
+                  )}
                 >
                   {col.quote ? (
                     <p className={cn('font-semibold tabular-nums text-sm', isLowest && 'text-green-700')}>

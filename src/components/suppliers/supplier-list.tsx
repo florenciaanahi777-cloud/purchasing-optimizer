@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { AddSupplierDialog } from './add-supplier-dialog'
 import { deleteSupplier } from '@/actions/suppliers'
+import { useT } from '@/lib/locale-context'
 import type { Supplier } from '@/types'
 
 interface SupplierListProps {
@@ -15,6 +16,7 @@ interface SupplierListProps {
 }
 
 export function SupplierList({ suppliers }: SupplierListProps) {
+  const t = useT()
   const [search, setSearch] = useState('')
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -31,7 +33,7 @@ export function SupplierList({ suppliers }: SupplierListProps) {
       if (result.error) {
         toast.error(result.error)
       } else {
-        toast.success('Supplier deleted.')
+        toast.success(t.supplier_deleted)
         setConfirmDeleteId(null)
       }
     })
@@ -42,13 +44,11 @@ export function SupplierList({ suppliers }: SupplierListProps) {
     return (
       <>
         <div className="text-center py-20 space-y-3">
-          <p className="text-sm font-medium">No suppliers saved yet.</p>
-          <p className="text-sm text-muted-foreground">
-            Add your first supplier to reuse them across RFQs.
-          </p>
+          <p className="text-sm font-medium">{t.suppliers_empty_title}</p>
+          <p className="text-sm text-muted-foreground">{t.suppliers_empty_desc}</p>
           <Button size="sm" onClick={() => setDialogOpen(true)}>
             <Plus className="h-3.5 w-3.5 mr-1.5" />
-            Add supplier
+            {t.add_supplier}
           </Button>
         </div>
         <AddSupplierDialog open={dialogOpen} onOpenChange={setDialogOpen} />
@@ -65,7 +65,7 @@ export function SupplierList({ suppliers }: SupplierListProps) {
         <div className="relative flex-1 max-w-xs">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
           <Input
-            placeholder="Search suppliers…"
+            placeholder={t.search_suppliers}
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="pl-9"
@@ -73,7 +73,7 @@ export function SupplierList({ suppliers }: SupplierListProps) {
         </div>
         <Button size="sm" onClick={() => setDialogOpen(true)}>
           <Plus className="h-3.5 w-3.5 mr-1.5" />
-          Add supplier
+          {t.add_supplier}
         </Button>
       </div>
 
@@ -83,7 +83,7 @@ export function SupplierList({ suppliers }: SupplierListProps) {
       {filtered.length === 0 && (
         <div className="text-center py-16">
           <p className="text-sm text-muted-foreground">
-            No suppliers match &quot;{search}&quot;.
+            {t.suppliers_no_results} &quot;{search}&quot;.
           </p>
         </div>
       )}
@@ -95,13 +95,13 @@ export function SupplierList({ suppliers }: SupplierListProps) {
             <thead>
               <tr className="border-b border-border bg-muted/30">
                 <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">
-                  Company
+                  {t.col_company}
                 </th>
                 <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">
-                  Email
+                  {t.col_email}
                 </th>
                 <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground hidden md:table-cell">
-                  Contact
+                  {t.col_contact}
                 </th>
                 <th className="px-4 py-2.5 w-[140px]" />
               </tr>
@@ -119,25 +119,23 @@ export function SupplierList({ suppliers }: SupplierListProps) {
                   </td>
                   <td className="px-4 py-3">
                     {confirmDeleteId === supplier.id ? (
-                      /* Inline delete confirmation */
                       <div className="flex items-center gap-2 text-xs justify-end">
-                        <span className="text-muted-foreground">Delete?</span>
+                        <span className="text-muted-foreground">{t.delete_q}</span>
                         <button
                           onClick={() => handleDelete(supplier.id)}
                           disabled={isPending}
                           className="text-destructive font-medium hover:underline disabled:opacity-50"
                         >
-                          Confirm
+                          {t.confirm}
                         </button>
                         <button
                           onClick={() => setConfirmDeleteId(null)}
                           className="text-muted-foreground hover:text-foreground"
                         >
-                          Cancel
+                          {t.cancel}
                         </button>
                       </div>
                     ) : (
-                      /* Actions */
                       <div className="flex items-center gap-1 justify-end">
                         <Button variant="ghost" size="sm" asChild className="h-7 w-7 p-0">
                           <Link href={`/suppliers/${supplier.id}`} title="Edit supplier">

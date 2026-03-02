@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { updateSupplier } from '@/actions/suppliers'
+import { useT } from '@/lib/locale-context'
 import type { Supplier } from '@/types'
 
 interface SupplierEditFormProps {
@@ -15,6 +16,7 @@ interface SupplierEditFormProps {
 }
 
 export function SupplierEditForm({ supplier }: SupplierEditFormProps) {
+  const t = useT()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [form, setForm] = useState({
@@ -43,7 +45,7 @@ export function SupplierEditForm({ supplier }: SupplierEditFormProps) {
         return
       }
 
-      toast.success('Supplier updated.')
+      toast.success(t.supplier_updated)
       router.push('/suppliers')
     })
   }
@@ -52,7 +54,7 @@ export function SupplierEditForm({ supplier }: SupplierEditFormProps) {
     <form onSubmit={handleSubmit} className="space-y-5 max-w-lg">
       <div className="space-y-1.5">
         <Label htmlFor="name">
-          Company name <span className="text-destructive">*</span>
+          {t.company_name} <span className="text-destructive">*</span>
         </Label>
         <Input
           id="name"
@@ -64,7 +66,7 @@ export function SupplierEditForm({ supplier }: SupplierEditFormProps) {
 
       <div className="space-y-1.5">
         <Label htmlFor="email">
-          Email <span className="text-destructive">*</span>
+          {t.email} <span className="text-destructive">*</span>
         </Label>
         <Input
           id="email"
@@ -77,8 +79,8 @@ export function SupplierEditForm({ supplier }: SupplierEditFormProps) {
 
       <div className="space-y-1.5">
         <Label htmlFor="contact_name">
-          Contact name{' '}
-          <span className="text-muted-foreground font-normal">(optional)</span>
+          {t.contact_name}{' '}
+          <span className="text-muted-foreground font-normal">({t.optional})</span>
         </Label>
         <Input
           id="contact_name"
@@ -90,8 +92,8 @@ export function SupplierEditForm({ supplier }: SupplierEditFormProps) {
 
       <div className="space-y-1.5">
         <Label htmlFor="notes">
-          Notes{' '}
-          <span className="text-muted-foreground font-normal">(optional)</span>
+          {t.notes}{' '}
+          <span className="text-muted-foreground font-normal">({t.optional})</span>
         </Label>
         <Textarea
           id="notes"
@@ -104,7 +106,7 @@ export function SupplierEditForm({ supplier }: SupplierEditFormProps) {
 
       <div className="flex items-center gap-3 pt-2">
         <Button type="submit" disabled={isPending}>
-          {isPending ? 'Saving…' : 'Save changes'}
+          {isPending ? t.saving : t.save_changes}
         </Button>
         <Button
           type="button"
@@ -112,7 +114,7 @@ export function SupplierEditForm({ supplier }: SupplierEditFormProps) {
           onClick={() => router.push('/suppliers')}
           disabled={isPending}
         >
-          Cancel
+          {t.cancel}
         </Button>
       </div>
     </form>

@@ -1,8 +1,12 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Globe, LogOut } from 'lucide-react'
+import { Globe, LogOut, Check, ChevronDown } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { useLocale, useT } from '@/lib/locale-context'
+import { setLocale } from '@/actions/locale'
+import type { Locale } from '@/i18n'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { cn } from '@/lib/utils'
 
 interface UserMenuProps {
   name: string | null
@@ -26,16 +31,35 @@ function getInitials(name: string | null, email: string): string {
   return email[0].toUpperCase()
 }
 
+const LANGUAGES: { value: Locale; label: string }[] = [
+  { value: 'en', label: 'English' },
+  { value: 'es', label: 'Español' },
+]
+
 export function UserMenu({ name, email }: UserMenuProps) {
   const router = useRouter()
+  const { locale, setLocale: setLocaleCtx } = useLocale()
+  const t = useT()
   const initials = getInitials(name, email)
   const displayName = name ?? email
+  const [mounted, setMounted] = useState(false)
+  const [langOpen, setLangOpen] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
+
+  if (!mounted) return null
 
   async function handleSignOut() {
     const supabase = createClient()
     await supabase.auth.signOut()
     router.push('/login')
     router.refresh()
+  }
+
+  async function handleLocaleChange(next: Locale) {
+    if (next === locale) return
+    setLocaleCtx(next)           // instant UI update
+    await setLocale(next)        // persist to DB + cookie
   }
 
   return (
@@ -51,7 +75,7 @@ export function UserMenu({ name, email }: UserMenuProps) {
 
       <DropdownMenuContent align="end" className="w-56">
 
-        {/* User info header — non-clickable */}
+        {/* User info header */}
         <DropdownMenuLabel className="font-normal">
           <p className="text-sm font-medium leading-none">{displayName}</p>
           {name && (
@@ -61,15 +85,36 @@ export function UserMenu({ name, email }: UserMenuProps) {
 
         <DropdownMenuSeparator />
 
-        {/* Change language — placeholder */}
+        {/* Language toggle */}
         <DropdownMenuItem
-          disabled
-          className="text-muted-foreground cursor-not-allowed"
+          onSelect={e => e.preventDefault()}
+          onClick={() => setLangOpen(prev => !prev)}
+          className="cursor-pointer"
         >
           <Globe className="h-3.5 w-3.5 mr-2" />
-          Change language
-          <span className="ml-auto text-xs text-muted-foreground/60">Soon</span>
+          {t.language}
+          <ChevronDown
+            className={cn(
+              'h-3.5 w-3.5 ml-auto transition-transform duration-150',
+              langOpen && 'rotate-180'
+            )}
+          />
         </DropdownMenuItem>
+
+        {/* Inline language options */}
+        {langOpen && LANGUAGES.map(lang => (
+          <DropdownMenuItem
+            key={lang.value}
+            onSelect={e => e.preventDefault()}
+            onClick={() => handleLocaleChange(lang.value)}
+            className="pl-8 cursor-pointer"
+          >
+            <span className="flex-1">{lang.label}</span>
+            {locale === lang.value && (
+              <Check className="h-3.5 w-3.5 text-primary" />
+            )}
+          </DropdownMenuItem>
+        ))}
 
         <DropdownMenuSeparator />
 
@@ -79,7 +124,7 @@ export function UserMenu({ name, email }: UserMenuProps) {
           className="text-destructive focus:text-destructive focus:bg-destructive/10 cursor-pointer"
         >
           <LogOut className="h-3.5 w-3.5 mr-2" />
-          Sign out
+          {t.sign_out}
         </DropdownMenuItem>
 
       </DropdownMenuContent>

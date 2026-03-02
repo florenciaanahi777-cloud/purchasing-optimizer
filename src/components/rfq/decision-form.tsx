@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
 import { recordDecision } from '@/actions/decisions'
+import { useT } from '@/lib/locale-context'
 import type { ComparisonData } from '@/types'
 
 function formatCurrency(val: number) {
@@ -20,6 +21,7 @@ interface DecisionFormProps {
 }
 
 export function DecisionForm({ data, savedAiRecommendation }: DecisionFormProps) {
+  const t = useT()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [selectedSupplierId, setSelectedSupplierId] = useState<string | null>(null)
@@ -59,7 +61,7 @@ export function DecisionForm({ data, savedAiRecommendation }: DecisionFormProps)
         return
       }
 
-      toast.success('Decision recorded.')
+      toast.success(t.decision_recorded)
       router.push(`/rfq/${data.rfq.id}`)
     })
   }
@@ -71,15 +73,15 @@ export function DecisionForm({ data, savedAiRecommendation }: DecisionFormProps)
       <div className="space-y-3">
         <div>
           <Label className="text-sm font-semibold">
-            Select winning supplier <span className="text-destructive">*</span>
+            {t.select_supplier_label} <span className="text-destructive">*</span>
           </Label>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Only suppliers who have submitted a quote can be selected.
+            {t.select_supplier_desc}
           </p>
         </div>
 
         {submittedColumns.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No quotes have been submitted yet.</p>
+          <p className="text-sm text-muted-foreground">{t.no_quotes_yet}</p>
         ) : (
           <div className="space-y-2">
             {submittedColumns.map(col => {
@@ -124,10 +126,10 @@ export function DecisionForm({ data, savedAiRecommendation }: DecisionFormProps)
       {/* ── Reason ───────────────────────────────────────────────────── */}
       <div className="space-y-1.5">
         <Label htmlFor="reason" className="text-sm font-semibold">
-          Decision reason <span className="text-destructive">*</span>
+          {t.decision_reason_label} <span className="text-destructive">*</span>
         </Label>
         <p className="text-xs text-muted-foreground">
-          This will be saved with the decision record. Be specific enough to justify the choice later.
+          {t.decision_reason_desc}
         </p>
         <Textarea
           id="reason"
@@ -145,7 +147,7 @@ export function DecisionForm({ data, savedAiRecommendation }: DecisionFormProps)
           type="submit"
           disabled={isPending || !selectedSupplierId || !reason.trim()}
         >
-          {isPending ? 'Saving…' : 'Confirm decision'}
+          {isPending ? t.saving : t.confirm_decision}
         </Button>
         <Button
           type="button"
@@ -153,7 +155,7 @@ export function DecisionForm({ data, savedAiRecommendation }: DecisionFormProps)
           onClick={() => router.back()}
           disabled={isPending}
         >
-          Cancel
+          {t.cancel}
         </Button>
       </div>
 

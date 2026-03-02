@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Separator } from '@/components/ui/separator'
 import { SupplierSelector } from './supplier-selector'
 import { createRFQ } from '@/actions/rfqs'
+import { useT } from '@/lib/locale-context'
 import type { Supplier } from '@/types'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -54,6 +55,7 @@ interface RFQFormProps {
 }
 
 export function RFQForm({ initialSuppliers }: RFQFormProps) {
+  const t = useT()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const draftRef = useRef(false)
@@ -115,7 +117,7 @@ export function RFQForm({ initialSuppliers }: RFQFormProps) {
       }
 
       if (isDraft) {
-        toast.success('RFQ saved as draft.')
+        toast.success(t.rfq_draft_saved)
       } else {
         const n = selectedIds.length
         const failed = result.data?.emailsFailed ?? []
@@ -124,7 +126,7 @@ export function RFQForm({ initialSuppliers }: RFQFormProps) {
             `RFQ sent. Email delivery failed for: ${failed.join(', ')}. Copy their links from the RFQ page.`
           )
         } else {
-          toast.success(`RFQ sent to ${n} supplier${n > 1 ? 's' : ''}.`)
+          toast.success(`${t.rfq_sent_to} ${n} ${n > 1 ? t.rfq_sent_suppliers : t.rfq_sent_supplier}.`)
         }
       }
 
@@ -144,7 +146,7 @@ export function RFQForm({ initialSuppliers }: RFQFormProps) {
       <div className="space-y-4">
         <div className="space-y-1.5">
           <Label htmlFor="rfq-title">
-            Title <span className="text-destructive">*</span>
+            {t.rfq_title_label} <span className="text-destructive">*</span>
           </Label>
           <Input
             id="rfq-title"
@@ -159,7 +161,7 @@ export function RFQForm({ initialSuppliers }: RFQFormProps) {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1.5">
             <Label htmlFor="rfq-deadline">
-              Response deadline <span className="text-destructive">*</span>
+              {t.rfq_deadline} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="rfq-deadline"
@@ -172,7 +174,7 @@ export function RFQForm({ initialSuppliers }: RFQFormProps) {
 
           <div className="space-y-1.5">
             <Label htmlFor="rfq-notes">
-              Notes <span className="text-muted-foreground font-normal">(optional)</span>
+              {t.rfq_notes} <span className="text-muted-foreground font-normal">({t.optional})</span>
             </Label>
             <Input
               id="rfq-notes"
@@ -189,20 +191,18 @@ export function RFQForm({ initialSuppliers }: RFQFormProps) {
       {/* ── Line items ───────────────────────────────────────────────────── */}
       <div className="space-y-3">
         <div>
-          <h2 className="text-sm font-semibold">Line items</h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            List every product or SKU you need suppliers to quote on.
-          </p>
+          <h2 className="text-sm font-semibold">{t.line_items}</h2>
+          <p className="text-xs text-muted-foreground mt-0.5">{t.line_items_desc}</p>
         </div>
 
         {/* Items table */}
         <div className="border border-border rounded-md overflow-hidden">
           {/* Header */}
           <div className="grid grid-cols-[100px_1fr_100px_90px_36px] gap-2 px-3 py-2 bg-muted/30 border-b border-border">
-            <span className="text-xs font-medium text-muted-foreground">SKU</span>
-            <span className="text-xs font-medium text-muted-foreground">Description *</span>
-            <span className="text-xs font-medium text-muted-foreground">Unit *</span>
-            <span className="text-xs font-medium text-muted-foreground">Qty *</span>
+            <span className="text-xs font-medium text-muted-foreground">{t.sku}</span>
+            <span className="text-xs font-medium text-muted-foreground">{t.description} *</span>
+            <span className="text-xs font-medium text-muted-foreground">{t.unit} *</span>
+            <span className="text-xs font-medium text-muted-foreground">{t.qty} *</span>
             <span />
           </div>
 
@@ -265,7 +265,7 @@ export function RFQForm({ initialSuppliers }: RFQFormProps) {
           onClick={addItem}
         >
           <Plus className="h-3 w-3" />
-          Add item
+          {t.add_item}
         </Button>
       </div>
 
@@ -274,10 +274,8 @@ export function RFQForm({ initialSuppliers }: RFQFormProps) {
       {/* ── Suppliers ────────────────────────────────────────────────────── */}
       <div className="space-y-3">
         <div>
-          <h2 className="text-sm font-semibold">Suppliers</h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Select who should receive this RFQ. Required to send, optional for drafts.
-          </p>
+          <h2 className="text-sm font-semibold">{t.rfq_suppliers_label}</h2>
+          <p className="text-xs text-muted-foreground mt-0.5">{t.rfq_suppliers_desc}</p>
         </div>
 
         <SupplierSelector
@@ -298,7 +296,7 @@ export function RFQForm({ initialSuppliers }: RFQFormProps) {
           onClick={() => handleSubmit(true)}
         >
           <Save className="h-3.5 w-3.5 mr-1.5" />
-          {isPending && draftRef.current ? 'Saving…' : 'Save as draft'}
+          {isPending && draftRef.current ? t.saving : t.save_as_draft}
         </Button>
 
         <Button
@@ -308,7 +306,7 @@ export function RFQForm({ initialSuppliers }: RFQFormProps) {
           onClick={() => handleSubmit(false)}
         >
           <Send className="h-3.5 w-3.5 mr-1.5" />
-          {isPending && !draftRef.current ? 'Sending…' : 'Send to suppliers'}
+          {isPending && !draftRef.current ? t.sending : t.send_to_suppliers}
         </Button>
       </div>
 
