@@ -2,7 +2,7 @@ import en from './en'
 import es from './es'
 
 export type Locale = 'en' | 'es'
-export type Dict = typeof en
+export type Dict = { [K in keyof typeof en]: string }
 
 const dicts: Record<Locale, Dict> = { en, es }
 

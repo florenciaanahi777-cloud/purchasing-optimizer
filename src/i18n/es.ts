@@ -1,6 +1,6 @@
 import type en from './en'
 
-const es: typeof en = {
+const es: { [K in keyof typeof en]: string } = {
   // Navigation
   nav_dashboard: 'Inicio',
   nav_suppliers: 'Proveedores',
