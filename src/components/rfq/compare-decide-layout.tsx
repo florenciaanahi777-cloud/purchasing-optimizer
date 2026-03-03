@@ -98,17 +98,17 @@ export function CompareDecideLayout({ data, detail, rfqId }: Props) {
 
           {/* Decided — read-only summary */}
           {isDecided && decision && (
-            <div className="border border-green-200 bg-green-50 rounded-md px-4 py-3 space-y-1.5">
-              <p className="text-xs font-semibold text-green-800 uppercase tracking-wide">
+            <div className="rounded-lg border border-[oklch(0.72_0.17_145)]/30 bg-[oklch(0.13_0.03_145)] p-4 space-y-1">
+              <p className="text-xs font-medium text-[oklch(0.72_0.17_145)] uppercase tracking-wide">
                 {t.decision_recorded_title} · {format(new Date(decision.decided_at), 'MMM d, yyyy')}
               </p>
-              <p className="text-sm font-semibold text-green-900">{decision.winning_supplier.name}</p>
+              <p className="text-sm font-semibold text-foreground">{decision.winning_supplier.name}</p>
               {winningColumn?.quote && (
-                <p className="text-xs text-green-700 tabular-nums">
+                <p className="text-sm text-[oklch(0.72_0.17_145)] tabular-nums">
                   {formatCurrency(winningColumn.quote.totalValue)} total
                 </p>
               )}
-              <p className="text-sm text-green-700 italic">"{decision.reason}"</p>
+              <p className="text-sm italic text-[oklch(0.72_0.17_145)]/80">"{decision.reason}"</p>
             </div>
           )}
 

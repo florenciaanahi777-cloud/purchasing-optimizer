@@ -151,13 +151,13 @@ export function ComparisonTable({ data, selectedSupplierId, onSelectSupplier }: 
                       key={col.rfqSupplierId}
                       className={cn(
                         'px-4 py-3 text-center',
-                        isLowest && 'bg-green-50',
+                        isLowest && 'bg-[oklch(0.15_0.03_145)]',
                         isSelected && !isLowest && 'bg-primary/5'
                       )}
                     >
-                      <p className={cn('font-medium tabular-nums', isLowest && 'text-green-700')}>
+                      <p className={cn('font-medium tabular-nums', isLowest && 'text-[oklch(0.72_0.17_145)] font-semibold')}>
                         {formatCurrency(price.unitPrice)}
-                        {isLowest && <span className="ml-1 text-xs">★</span>}
+                        {isLowest && <span className="ml-1 text-xs text-[oklch(0.72_0.17_145)]">★</span>}
                       </p>
                       <p className="text-xs text-muted-foreground tabular-nums">
                         {formatCurrency(price.totalPrice)} total
@@ -187,14 +187,14 @@ export function ComparisonTable({ data, selectedSupplierId, onSelectSupplier }: 
                   key={col.rfqSupplierId}
                   className={cn(
                     'px-4 py-3 text-center',
-                    isLowest && 'bg-green-50',
+                    isLowest && 'bg-[oklch(0.15_0.03_145)]',
                     isSelected && !isLowest && 'bg-primary/5'
                   )}
                 >
                   {col.quote ? (
-                    <p className={cn('font-semibold tabular-nums text-sm', isLowest && 'text-green-700')}>
+                    <p className={cn('font-semibold tabular-nums text-sm', isLowest && 'text-[oklch(0.72_0.17_145)]')}>
                       {formatCurrency(col.quote.totalValue)}
-                      {isLowest && <span className="ml-1 text-xs">★</span>}
+                      {isLowest && <span className="ml-1 text-xs text-[oklch(0.72_0.17_145)]">★</span>}
                     </p>
                   ) : (
                     <span className="text-muted-foreground text-xs">—</span>

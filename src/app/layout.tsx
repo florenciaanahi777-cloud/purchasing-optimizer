@@ -23,7 +23,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
-        <Toaster position="top-right" richColors />
+        <Toaster
+          position="top-right"
+          theme="dark"
+          toastOptions={{
+            classNames: {
+              success: 'bg-[oklch(0.18_0.05_145)] text-[oklch(0.72_0.17_145)] border border-[oklch(0.72_0.17_145)]/30',
+              error:   'bg-[oklch(0.18_0.05_27)] text-[oklch(0.70_0.18_27)] border border-[oklch(0.70_0.18_27)]/30',
+              info:    'bg-[oklch(0.18_0.05_240)] text-[oklch(0.75_0.15_240)] border border-[oklch(0.75_0.15_240)]/30',
+            },
+          }}
+        />
       </body>
     </html>
   )
