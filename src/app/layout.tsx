@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   description: 'Centralize, compare and decide smarter.',
   icons: {
     icon: '/logo.jpg',
+    shortcut: '/logo.jpg',
     apple: '/logo.jpg',
   },
 }

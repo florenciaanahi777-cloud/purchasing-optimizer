@@ -40,7 +40,7 @@ export default function LoginPage() {
 
         <div className="space-y-1">
           <div className="mb-4">
-            <Image src="/logo.jpg" alt="PO" width={96} height={24} priority />
+            <Image src="/logo.jpg" alt="PO" width={80} height={80} className="object-contain" priority />
           </div>
           <h1 className="text-xl font-semibold">Sign in</h1>
           <p className="text-sm text-muted-foreground">Purchase Optimizer</p>
