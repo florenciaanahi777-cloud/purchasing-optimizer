@@ -48,7 +48,7 @@ const en = {
   rfq_suppliers_label: 'Suppliers',
   rfq_suppliers_desc: 'Select who should receive this RFQ. Required to send, optional for drafts.',
   save_as_draft: 'Save as draft',
-  send_to_suppliers: 'Send to suppliers',
+  send_to_suppliers: 'Request Quotes',
   sending: 'Sending…',
   rfq_draft_saved: 'RFQ saved as draft.',
   rfq_sent_to: 'RFQ sent to',
@@ -69,7 +69,7 @@ const en = {
   no_quotes_yet: 'No quotes have been submitted yet.',
   decision_reason_label: 'Decision reason',
   decision_reason_desc: 'This will be saved with the decision record. Be specific enough to justify the choice later.',
-  confirm_decision: 'Confirm decision',
+  confirm_decision: 'Confirm Decision',
   decision_recorded: 'Decision recorded.',
 
   // Compare / decide layout
@@ -87,6 +87,13 @@ const en = {
   decision: 'Decision',
   winner: 'Winner:',
   none_selected: 'None selected',
+
+  // Branding / renamed
+  ai_recommendation: 'PDO Insight',
+  compare_and_decide: 'Compare & Choose',
+  create_request: 'New Purchase Request',
+  analyzing: 'Analyzing quotes…',
+  no_quotes: 'No quotes received yet',
 } as const
 
 export default en

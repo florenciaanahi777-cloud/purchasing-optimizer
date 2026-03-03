@@ -42,53 +42,37 @@
 /* ─── Design Tokens: B2B Healthcare Procurement ─── */
 :root {
   --radius: 0.375rem;
-
-  /* Surfaces */
-  --background:      oklch(0.99 0 0);       /* near-white page bg */
-  --foreground:      oklch(0.15 0 0);       /* near-black body text */
-  --card:            oklch(1 0 0);
-  --card-foreground: oklch(0.15 0 0);
-  --popover:         oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0 0);
-
-  /* Primary: muted slate-blue — calm, professional */
-  --primary:          oklch(0.45 0.08 240);
-  --primary-foreground: oklch(0.99 0 0);
-
-  /* Secondary & muted: neutral grays */
-  --secondary:          oklch(0.96 0 0);
-  --secondary-foreground: oklch(0.3 0 0);
-  --muted:              oklch(0.96 0 0);
-  --muted-foreground:   oklch(0.52 0 0);
-
-  /* Accent: same as secondary for MVP */
-  --accent:             oklch(0.96 0 0);
-  --accent-foreground:  oklch(0.3 0 0);
-
-  /* Semantic */
+  --background:      oklch(0 0 0);
+  --foreground:      oklch(0.93 0 0);
+  --card:            oklch(0.07 0 0);
+  --card-foreground: oklch(0.93 0 0);
+  --popover:         oklch(0.07 0 0);
+  --popover-foreground: oklch(0.93 0 0);
+  --primary:          oklch(1 0 0);
+  --primary-foreground: oklch(0 0 0);
+  --secondary:          oklch(0.13 0 0);
+  --secondary-foreground: oklch(0.93 0 0);
+  --muted:              oklch(0.13 0 0);
+  --muted-foreground:   oklch(0.55 0 0);
+  --accent:             oklch(0.60 0.15 240);
+  --accent-foreground:  oklch(1 0 0);
   --destructive: oklch(0.57 0.22 27);
-
-  /* Borders & inputs: subtle, low-contrast */
-  --border: oklch(0.90 0 0);
-  --input:  oklch(0.90 0 0);
-  --ring:   oklch(0.65 0.08 240);
-
-  /* Sidebar */
-  --sidebar:                  oklch(0.98 0 0);
-  --sidebar-foreground:       oklch(0.3 0 0);
-  --sidebar-primary:          oklch(0.45 0.08 240);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent:           oklch(0.94 0 0);
-  --sidebar-accent-foreground: oklch(0.3 0 0);
-  --sidebar-border:           oklch(0.90 0 0);
-  --sidebar-ring:             oklch(0.65 0.08 240);
-
-  /* Custom semantic tokens */
+  --border: oklch(0.20 0 0);
+  --input:  oklch(0.20 0 0);
+  --ring:   oklch(1 0 0);
+  --sidebar:                  oklch(0.05 0 0);
+  --sidebar-foreground:       oklch(0.93 0 0);
+  --sidebar-primary:          oklch(1 0 0);
+  --sidebar-primary-foreground: oklch(0 0 0);
+  --sidebar-accent:           oklch(0.13 0 0);
+  --sidebar-accent-foreground: oklch(0.93 0 0);
+  --sidebar-border:           oklch(0.20 0 0);
+  --sidebar-ring:             oklch(1 0 0);
   --success:             oklch(0.52 0.14 145);
   --success-foreground:  oklch(0.99 0 0);
-  --success-bg:          oklch(0.97 0.03 145);
+  --success-bg:          oklch(0.15 0.04 145);
   --warning:             oklch(0.65 0.15 75);
-  --warning-bg:          oklch(0.98 0.02 75);
+  --warning-bg:          oklch(0.15 0.03 75);
 }
 
 @layer base {

@@ -50,7 +50,7 @@ const es: { [K in keyof typeof en]: string } = {
   rfq_suppliers_label: 'Proveedores',
   rfq_suppliers_desc: 'Seleccioná quiénes recibirán esta solicitud. Requerido para enviar, opcional para borradores.',
   save_as_draft: 'Guardar borrador',
-  send_to_suppliers: 'Enviar a proveedores',
+  send_to_suppliers: 'Solicitar cotizaciones',
   sending: 'Enviando…',
   rfq_draft_saved: 'Solicitud guardada como borrador.',
   rfq_sent_to: 'Solicitud enviada a',
@@ -89,6 +89,13 @@ const es: { [K in keyof typeof en]: string } = {
   decision: 'Decisión',
   winner: 'Ganador:',
   none_selected: 'Ninguno seleccionado',
+
+  // Branding / renamed
+  ai_recommendation: 'PDO Insight',
+  compare_and_decide: 'Comparar y elegir',
+  create_request: 'Nueva solicitud de compra',
+  analyzing: 'Analizando cotizaciones…',
+  no_quotes: 'Aún no hay cotizaciones recibidas',
 }
 
 export default es
