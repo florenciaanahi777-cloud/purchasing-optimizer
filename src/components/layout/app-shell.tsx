@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ClipboardList, Users, History, LayoutDashboard, Menu, X } from 'lucide-react'
+import { Users, History, LayoutDashboard, Menu, X } from 'lucide-react'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { UserMenu } from './user-menu'
 import { LocaleProvider, useT } from '@/lib/locale-context'
@@ -92,9 +93,8 @@ export function AppShell({ children, user }: AppShellProps) {
           )}
         >
           <div className="h-14 flex items-center px-4 border-b border-border shrink-0">
-            <Link href="/dashboard" className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <ClipboardList className="h-4 w-4 text-primary" />
-              PDO
+            <Link href="/dashboard" className="flex items-center">
+              <Image src="/logo.jpg" alt="PO" width={72} height={18} priority />
             </Link>
           </div>
 

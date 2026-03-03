@@ -91,7 +91,7 @@ const es: { [K in keyof typeof en]: string } = {
   none_selected: 'Ninguno seleccionado',
 
   // Branding / renamed
-  ai_recommendation: 'PDO Insight',
+  ai_recommendation: 'PO Insight',
   compare_and_decide: 'Comparar y elegir',
   create_request: 'Nueva solicitud de compra',
   analyzing: 'Analizando cotizaciones…',

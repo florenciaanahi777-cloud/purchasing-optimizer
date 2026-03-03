@@ -89,7 +89,7 @@ const en = {
   none_selected: 'None selected',
 
   // Branding / renamed
-  ai_recommendation: 'PDO Insight',
+  ai_recommendation: 'PO Insight',
   compare_and_decide: 'Compare & Choose',
   create_request: 'New Purchase Request',
   analyzing: 'Analyzing quotes…',

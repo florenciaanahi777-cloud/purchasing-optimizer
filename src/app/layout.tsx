@@ -14,8 +14,12 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Purchasing Decision Optimizer',
-  description: 'Compare supplier quotes and make defensible procurement decisions.',
+  title: 'PO — Purchase Optimizer',
+  description: 'Centralize, compare and decide smarter.',
+  icons: {
+    icon: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

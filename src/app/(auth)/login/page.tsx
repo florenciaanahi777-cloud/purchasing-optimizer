@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ClipboardList } from 'lucide-react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -39,12 +39,11 @@ export default function LoginPage() {
       <div className="w-full max-w-sm space-y-8 px-4">
 
         <div className="space-y-1">
-          <div className="flex items-center gap-2 mb-4">
-            <ClipboardList className="h-4 w-4 text-primary" />
-            <span className="text-sm font-semibold">PDO</span>
+          <div className="mb-4">
+            <Image src="/logo.jpg" alt="PO" width={96} height={24} priority />
           </div>
           <h1 className="text-xl font-semibold">Sign in</h1>
-          <p className="text-sm text-muted-foreground">Purchasing Decision Optimizer</p>
+          <p className="text-sm text-muted-foreground">Purchase Optimizer</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
