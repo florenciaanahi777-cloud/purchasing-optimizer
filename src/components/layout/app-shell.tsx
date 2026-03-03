@@ -94,7 +94,7 @@ export function AppShell({ children, user }: AppShellProps) {
         >
           <div className="h-14 flex items-center px-4 border-b border-border shrink-0">
             <Link href="/dashboard" className="flex items-center">
-              <Image src="/logo.jpg" alt="PO" width={40} height={40} className="object-contain" priority />
+              <Image src="/logo.svg" alt="PO" width={40} height={40} className="object-contain" priority />
             </Link>
           </div>
 

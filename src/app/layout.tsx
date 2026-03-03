@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   title: 'PO — Purchase Optimizer',
   description: 'Centralize, compare and decide smarter.',
   icons: {
-    icon: '/logo.jpg',
-    shortcut: '/logo.jpg',
-    apple: '/logo.jpg',
+    icon: '/logo.svg',
+    shortcut: '/logo.svg',
+    apple: '/logo.svg',
   },
 }
 
