@@ -78,7 +78,7 @@ export async function getAIRecommendation(
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
+        model: 'claude-sonnet-4-5',
         max_tokens: 512,
         messages: [{ role: 'user', content: prompt }],
       }),

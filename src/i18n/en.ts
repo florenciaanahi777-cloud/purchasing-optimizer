@@ -1,6 +1,7 @@
 const en = {
   // Navigation
   nav_dashboard: 'Dashboard',
+  dashboard_subtitle: 'Create a request, compare quotes and decide with confidence.',
   nav_suppliers: 'Suppliers',
   nav_history: 'History',
   toggle_menu: 'Toggle menu',

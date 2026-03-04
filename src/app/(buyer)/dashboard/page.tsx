@@ -48,6 +48,7 @@ export default async function DashboardPage() {
     <div>
       <PageHeader
         title="Dashboard"
+        description="Create a request, compare quotes and decide with confidence."
         action={
           <Button size="sm" asChild>
             <Link href="/rfq/new">

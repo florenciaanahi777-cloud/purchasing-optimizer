@@ -3,6 +3,7 @@ import type en from './en'
 const es: { [K in keyof typeof en]: string } = {
   // Navigation
   nav_dashboard: 'Inicio',
+  dashboard_subtitle: 'Creá un pedido, compará cotizaciones y decidí con confianza.',
   nav_suppliers: 'Proveedores',
   nav_history: 'Historial',
   toggle_menu: 'Abrir menú',
